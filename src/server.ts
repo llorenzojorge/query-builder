@@ -4,8 +4,11 @@ import { knex } from "./database/knex"
 const app = express()
 app.use(express.json())
 
-app.get("/", async (request: Request, response: Response) => {
-  response.json({ message: "Hello World!" })
+app.get("/courses", async (request: Request, response: Response) => {
+  // const courses =  await knex.raw("SELECT * FROM courses")
+  const courses = await knex("courses").select().orderBy("name", "desc")
+
+  response.json(courses)
 })
 
 app.post("/courses", async (request: Request, response: Response) => {
